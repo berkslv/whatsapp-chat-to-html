@@ -1,6 +1,6 @@
 <% if (page && limit) { %>
 <div class="pagination">
-  <% if (page > 1) { %>
+  <% if (page > 0) { %>
   <a href="http://localhost:3000?page=<%= parseInt(page) - 1%>&limit=<%= limit %>">&#x3c; <%= parseInt(page) - 1 %> </a>
   <% } else { %>
   <a class="disabled-link">&#x3c; 0</a>

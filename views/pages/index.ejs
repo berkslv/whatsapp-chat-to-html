@@ -4,7 +4,7 @@
     
     <% if (data) { %>
     <div class="chat">
-      <% data.forEach((item) => { %> <% if (item.author !== "Berk") { %>
+      <% data.forEach((item) => { %> <% if (item.author === authors[0].author) { %>
       <div class="chat-buble-one">
         <span>(<%= item.date %>) <%= item.author %>:</span>
         <%- include('../partials/content.ejs', { item }); %> 

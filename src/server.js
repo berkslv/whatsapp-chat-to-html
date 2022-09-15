@@ -20,10 +20,15 @@ app.get("/", async (req, res) => {
   if (!limit)
     return res.status(400).send("Limit is not defined");
 
-  const query = `SELECT * FROM chats LIMIT ${limit} OFFSET ${page * limit}`;
-  const data = await readToDB(db,query);
+  const selectQuery = `SELECT * FROM chats LIMIT ${limit} OFFSET ${page * limit}`;
+  const data = await readToDB(db, selectQuery);
 
-  res.render('pages/index', { data, page, limit });
+  const authorsQuery = `SELECT DISTINCT author FROM chats`;
+  const authors = await readToDB(db, authorsQuery);
+
+  console.log({authors});
+
+  res.render('pages/index', { data, page, limit, authors });
 });
 
 app.listen(port, () => {

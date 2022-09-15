@@ -14,7 +14,7 @@ npm run insert --folder ./data --date-format DD-MM-YYYY HH:mm:ss --lang en --rel
 
 <br/>
 
-After this process, your data is ready to be used in the database. Next is to showcase it with a user-friendly UI. This UI is exposed from localhost:3000 using ejs and express for the simple usage it provides.
+After this process, your data is ready to be used in the database. Next is to showcase it with a user-friendly UI. This UI is exposed from `http://localhost:3000/?page=0&limit=100` using ejs and express for the simple usage it provides.
 
 ```bash
 

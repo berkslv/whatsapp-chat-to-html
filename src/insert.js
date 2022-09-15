@@ -64,36 +64,66 @@ const parseTextLineToObject = (line, dateFormat, lang) => {
   let date = moment(line.split("[").pop().split("]")[0], dateFormat).format(
     "YYYY-MM-DD HH:mm:ss"
   );
-  let author = line.split("]").pop().split(":")[0].trim();
-  let content, type;
 
-  if (line.includes("<attached:")) {
-    content = line.split("<attached:").pop().split(">")[0].trim();
-    if (
-      content.includes(".jpg") ||
-      content.includes(".png") ||
-      content.includes(".gif") ||
-      content.includes(".jpeg") ||
-      content.includes(".webp")
-    ) {
-      type = "image";
-    } else if (content.includes(".mp4")) {
-      type = "video";
-    } else if (
-      content.includes(".mp3") ||
-      content.includes(".wav") ||
-      content.includes(".opus")
-    ) {
-      type = "audio";
+  // multiline messages
+  if (date) {
+    let author = line.split("]").pop().split(":")[0].trim();
+    let content, type;
+
+    if (line.includes("<attached:")) {
+      content = line.split("<attached:").pop().split(">")[0].trim();
+      if (
+        content.includes(".jpg") ||
+        content.includes(".png") ||
+        content.includes(".gif") ||
+        content.includes(".jpeg") ||
+        content.includes(".webp")
+      ) {
+        type = "image";
+      } else if (content.includes(".mp4")) {
+        type = "video";
+      } else if (
+        content.includes(".mp3") ||
+        content.includes(".wav") ||
+        content.includes(".opus")
+      ) {
+        type = "audio";
+      }
+    } else {
+      content = line.split(":").pop().trim();
+      type = "text";
     }
   } else {
-    content = line.split(":").pop().trim();
-    type = "text";
+    let author = null;
+    let content;
+
+    if (line.includes("<attached:")) {
+      content = line.split("<attached:").pop().split(">")[0].trim();
+      if (
+        content.includes(".jpg") ||
+        content.includes(".png") ||
+        content.includes(".gif") ||
+        content.includes(".jpeg") ||
+        content.includes(".webp")
+      ) {
+        type = "image";
+      } else if (content.includes(".mp4")) {
+        type = "video";
+      } else if (
+        content.includes(".mp3") ||
+        content.includes(".wav") ||
+        content.includes(".opus")
+      ) {
+        type = "audio";
+      }
+    } else {
+      content = line
+      type = "text";
+    }
   }
 
   return { date, author, content, type };
 };
-
 
 const main = () => {
   const { folder, dateFormat, lang, relativeDate } = extractCommandLineArgs();
