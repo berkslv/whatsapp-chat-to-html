@@ -14,6 +14,9 @@ app.use(express.static('data'))
 app.get("/", async (req, res) => {
   const { page, limit } = req.query;
 
+  // For ngrok support
+  const URL = req.protocol + '://' + req.get('host');
+
   if (!page) 
     return res.status(400).send("Page is not defined");
 
@@ -26,9 +29,7 @@ app.get("/", async (req, res) => {
   const authorsQuery = `SELECT DISTINCT author FROM chats`;
   const authors = await readToDB(db, authorsQuery);
 
-  console.log({authors});
-
-  res.render('pages/index', { data, page, limit, authors });
+  res.render('pages/index', { data, page, limit, authors, URL });
 });
 
 app.listen(port, () => {
